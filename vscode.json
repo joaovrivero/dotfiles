@@ -1,48 +1,47 @@
 {
-  "workbench.colorTheme": "Kanagawa Wave",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.enableStickyScroll": true,
   "editor.scrollbar.vertical": "visible",
   "editor.scrollbar.horizontal": "visible",
   "editor.fontFamily": "JetBrainsMono Nerd Font",
   "editor.minimap.enabled": false,
-  "editor.fontSize": 15,
+  "editor.fontSize": 16,
   "editor.lineHeight": 1.8,
   "editor.tabSize": 2,
   "editor.renderLineHighlight": "gutter",
   "editor.codeActionsOnSave": {
-      "source.fixAll,eslint":"explicit"
+    "source.fixAll,eslint": "explicit"
   },
   "editor.rulers": [
-  80,
-  120
-],
+    120
+  ],
   "breadcrumbs.enabled": false,
-  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
   "explorer.confirmDragAndDrop": false,
   "explorer.compactFolders": false,
   "explorer.confirmDelete": false,
   "terminal.integrated.enableImages": true,
   "editor.wordWrap": "on",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.formatOnSave": true,
   "extensions.ignoreRecommendations": true,
   "files.associations": {
-  ".env.*": "dotenv",
-  ".prettierrc": "json",
-  "*.css": "css",
-  ".dev.vars": "dotenv"
-},
-"terminal.integrated.gpuAcceleration": "on",
-"explorer.fileNesting.enabled": true,
-"workbench.activityBar.location": "top",
-"window.menuBarVisibility": "compact",
-"window.commandCenter": false,
-"glassit.alpha": 255,
-"workbench.layoutControl.enabled": false,
-"telemetry.telemetryLevel": "off"
-
-
-  
-
+    ".env.*": "dotenv",
+    ".prettierrc": "json",
+    "*.css": "css",
+    ".dev.vars": "dotenv"
+  },
+  "terminal.integrated.gpuAcceleration": "on",
+  "explorer.fileNesting.enabled": true,
+  "workbench.layoutControl.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "window.menuBarVisibility": "compact",
+  "workbench.activityBar.location": "top",
+  "window.commandCenter": false,
+  "chat.mcp.serverSampling": {},
+  "javascript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorTheme": "Tokyo Night",
+  "remote.autoForwardPortsSource": "hybrid",
 }
