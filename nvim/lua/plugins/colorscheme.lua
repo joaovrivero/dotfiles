@@ -1,9 +1,15 @@
 return {
-	{ "rebelot/kanagawa.nvim" },
-	{
-		"LazyVim/LazyVim",
-		opts = {
-			colorscheme = "kanagawa",
-		},
-	},
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  -- Configure LazyVim to load
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "solarized-osaka",
+    },
+  },
 }
