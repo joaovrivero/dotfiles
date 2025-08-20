@@ -1,43 +1,44 @@
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-alias ls='eza -lh --group-directories-first --icons'
+# File system
+alias ls='eza -lh --group-directories-first --icons=auto'
 alias lsa='ls -a'
 alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
-alias ..='z ..'
-alias ...='z ../..'
-alias ....='z ../../..'
+alias ff="fzf --preview 'batcat --style=numbers --color=always {}'"
+alias fd='fdfind'
+alias cd='z'
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Tools
+alias n='nvim'
+alias g='git'
+alias d='docker'
+alias c='claude'
+alias bat='batcat'
+alias lzg='lazygit'
+alias lzd='lazydocker'
+alias zj='zellij'
+
+# Git
+alias gcm='git commit -m'
+alias gcam='git commit -a -m'
+alias gcad='git commit -a --amend'
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(mise activate zsh)"
 
-[ -z "$ZELLIJ" ] && exec zellij
-
-if command -v fastfetch &> /dev/null; then
-
-	fastfetch
-
-fi
-
+# History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
-setopt INC_APPEND_HISTORY
-
-export PATH="/home/jojo/.config/herd-lite/bin:$PATH"
-export PHP_INI_SCAN_DIR="/home/jojo/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
-
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
+setopt APPEND_HISTORY
