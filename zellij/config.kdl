@@ -274,37 +274,9 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-theme "kanagawa"
+theme "tokyo-night-dark"
 
-themes {
-    kanagawa {
-        fg "#DCD7BA"
-        bg "#1F1F28"
-        red "#C34043"
-        green "#76946A"
-        yellow "#FF9E3B"
-        blue "#7E9CD8"
-        magenta "#957FB8"
-        orange "#FFA066"
-        cyan "#7FB4CA"
-        black "#16161D"
-        white "#DCD7BA"
-    }
-    tokyo-night {
-        fg 169 177 214
-        bg 26 27 38
-        black 56 62 90
-        red 249 51 87
-        green 158 206 106
-        yellow 224 175 104
-        blue 122 162 247
-        magenta 187 154 247
-        cyan 42 195 222
-        white 192 202 245
-        orange 255 158 100
-    }
-}
- 
+
 // Choose the base input mode of zellij.
 // Default: normal
 // 
@@ -322,7 +294,7 @@ default_mode "normal"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "compact"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
