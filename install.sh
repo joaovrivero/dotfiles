@@ -85,9 +85,16 @@ setup_shell() {
     # For now, we'll assume manual linking or a stow command in the README.
     
     # Find the path to Zsh
+    
+    
+    # Add Zsh to the list of approved shells if it's not already there
     ZSH_PATH=$(which zsh)
-
-    # Check if the path was found and is a valid file
+    if ! grep -q "$ZSH_PATH" /etc/shells; then
+        echo "Adding $ZSH_PATH to /etc/shells..."
+        echo "$ZSH_PATH" | sudo tee -a /etc/shells
+    fi
+    
+    # --- Your existing chsh command follows ---
     if [ -n "$ZSH_PATH" ] && [ -f "$ZSH_PATH" ]; then
         echo "Changing default shell to Zsh..."
         chsh -s "$ZSH_PATH"
