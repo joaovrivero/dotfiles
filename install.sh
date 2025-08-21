@@ -84,12 +84,15 @@ setup_shell() {
     # If using stow, you would run it here.
     # For now, we'll assume manual linking or a stow command in the README.
     
-    msg "Changing default shell to Zsh..."
-    if [ "$(basename "$SHELL")" != "zsh" ]; then
-        chsh -s $(which zsh)
-        msg "Shell changed to Zsh. Please log out and back in for the change to take effect."
+    # Find the path to Zsh
+    ZSH_PATH=$(which zsh)
+
+    # Check if the path was found and is a valid file
+    if [ -n "$ZSH_PATH" ] && [ -f "$ZSH_PATH" ]; then
+        echo "Changing default shell to Zsh..."
+        chsh -s "$ZSH_PATH"
     else
-        msg "Default shell is already Zsh."
+        echo "⚠️  Error: Zsh is not installed or could not be found. Skipping shell change."
     fi
 }
 
