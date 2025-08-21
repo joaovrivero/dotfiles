@@ -12,7 +12,7 @@ msg() {
 
 install_yay() {
     msg "Installing build tools and yay..."
-    sudo pacman -S --needed --noconfirm git base-devel
+    sudo pacman -S --needed --noconfirm git base-devel zsh
     if ! command -v yay &> /dev/null; then
         cd /tmp
         git clone https://aur.archlinux.org/yay.git
@@ -34,13 +34,13 @@ configure_pacman() {
 install_packages() {
     msg "Installing terminal, dev, and system tools..."
     yay -S --noconfirm --needed \
-        wget curl unzip zsh inetutils impala \
+        wget curl unzip inetutils impala \
         fd eza fzf ripgrep zoxide bat jq xmlstarlet \
-        wl-clipboard fastfetch btop starship openssh tmux \
+        wl-clipboard fastfetch btop \
         cargo clang llvm mise \
         imagemagick \
         mariadb-libs postgresql-libs \
-        github-cli \
+        github-cli starship openssh tmux \
         lazygit lazydocker-bin
 }
 
