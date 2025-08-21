@@ -34,7 +34,7 @@ configure_pacman() {
 install_packages() {
     msg "Installing terminal, dev, and system tools..."
     yay -S --noconfirm --needed \
-        wget curl unzip inetutils impala \
+        wget curl unzip zsh inetutils impala \
         fd eza fzf ripgrep zoxide bat jq xmlstarlet \
         wl-clipboard fastfetch btop starship openssh tmux \
         cargo clang llvm mise \
