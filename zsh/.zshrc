@@ -42,3 +42,7 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt APPEND_HISTORY
+export PATH="/home/jojo/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/jojo/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+
+alias claude="/home/jojo/.claude/local/claude"
