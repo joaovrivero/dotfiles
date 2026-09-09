@@ -1,0 +1,23 @@
+# Pinacoteca colours for Ghostty. Palette and provenance: theme/pinacoteca/colors.toml
+palette = 0={{bg2}}
+palette = 1={{red}}
+palette = 2={{green}}
+palette = 3={{gold}}
+palette = 4={{blue}}
+palette = 5={{purple}}
+palette = 6={{aqua}}
+palette = 7={{fg}}
+palette = 8={{comment}}
+palette = 9={{red}}
+palette = 10={{green}}
+palette = 11={{gold}}
+palette = 12={{blue}}
+palette = 13={{purple}}
+palette = 14={{aqua}}
+palette = 15={{fg_bright}}
+background = {{bg0}}
+foreground = {{fg}}
+cursor-color = {{gold}}
+cursor-text = {{bg0}}
+selection-background = {{bg3}}
+selection-foreground = {{fg_bright}}

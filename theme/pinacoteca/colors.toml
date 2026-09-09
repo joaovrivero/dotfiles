@@ -1,0 +1,120 @@
+# Pinacoteca: a gallery-wall theme.
+#
+# Every hue is sampled from a painting in the wallpaper slideshow (see [provenance]).
+# Lightness comes from an OKLCH ladder, not from the painting, so all accents sit at
+# the same perceived brightness and every text colour clears 4.5:1 on the wall.
+# Chroma is clamped into a legibility band; warm pigments 11-13, cool pigments 6-8.5.
+#
+# The top-level keys follow the Omarchy colors.toml layout so the file can be dropped
+# into an Omarchy theme directory unchanged.
+
+name = "pinacoteca"
+appearance = "dark"
+
+accent = "#d7a447"
+cursor = "#d7a447"
+foreground = "#e6ccaf"
+background = "#18130e"
+selection_foreground = "#f7e5cf"
+selection_background = "#453b32"
+
+color0 = "#2e2822"
+color1 = "#d67066"
+color2 = "#88ab75"
+color3 = "#d7a447"
+color4 = "#799dbb"
+color5 = "#ad8ab6"
+color6 = "#6cabab"
+color7 = "#e6ccaf"
+color8 = "#7d6b59"
+color9 = "#d67066"
+color10 = "#88ab75"
+color11 = "#d7a447"
+color12 = "#799dbb"
+color13 = "#ad8ab6"
+color14 = "#6cabab"
+color15 = "#f7e5cf"
+
+[palette]
+# The wall: neutral umber, separated by lightness only.
+bg0 = "#18130e"       # editor and terminal background          L19
+bg1 = "#211c17"       # surfaces: sidebars, status, floats      L23
+bg2 = "#2e2822"       # selection, cursor line, inactive tabs   L28
+bg3 = "#453b32"       # borders, guides, whitespace             L36
+comment = "#7d6b59"   # comments, disabled                      L54  3.6:1
+# Linen: identifiers, punctuation, prose.
+fg_dim = "#b19a80"    # secondary text, status line             L70  6.9:1
+fg = "#e6ccaf"        # default text                            L86 12.0:1
+fg_bright = "#f7e5cf" # selected text, emphasis                 L93 15.0:1
+# Pigments: one per token family. Diagnostics reuse hue but are their own family.
+red = "#d67066"       # variables.builtin, errors, deletions    L66  5.6:1
+orange = "#d77f47"    # constants, numbers, booleans            L68  6.2:1
+gold = "#d7a447"      # accent, types, warnings, search         L75  8.2:1
+green = "#88ab75"     # strings, additions                      L70  7.1:1
+aqua = "#6cabab"      # special characters, regex, hints        L70  7.1:1
+blue = "#799dbb"      # functions, headings, info               L68  6.5:1
+purple = "#ad8ab6"    # keywords                                L68  6.2:1
+# Tinted walls for diff and virtual text backgrounds.
+red_bg = "#451310"
+green_bg = "#1b2c11"
+gold_bg = "#352300"
+blue_bg = "#162837"
+
+[provenance]
+# Source paintings live in the wallpaper slideshow. "sampled" is the k-means cluster
+# taken from the painting; the palette value keeps its hue and clamped chroma and
+# takes its lightness from the ladder above.
+
+[provenance.wall]
+roles = ["bg0", "bg1", "bg2", "bg3", "comment"]
+painting = "Johannes Vermeer - Diana and Her Nymphs"
+sampled = ["#614529", "#785530", "#956734"]
+hue = 65
+
+[provenance.linen]
+roles = ["fg_dim", "fg", "fg_bright"]
+painting = "Johannes Vermeer - Diana and Her Nymphs"
+sampled = ["#c2a788"]
+hue = 71
+
+[provenance.red]
+roles = ["red", "red_bg"]
+painting = "Jan Matejko - Stańczyk"
+sampled = ["#872824"]
+hue = 27
+
+[provenance.orange]
+roles = ["orange"]
+painting = "Arkhip Kuindzhi - Red Sunset on the Dnipro"
+sampled = ["#b45602"]
+hue = 51
+
+[provenance.gold]
+roles = ["gold", "gold_bg", "accent", "cursor"]
+painting = "Unidentified Artist - Portrait of a Woman against a Gold Decorative Background"
+sampled = ["#c99738"]
+hue = 80
+
+[provenance.green]
+roles = ["green", "green_bg"]
+painting = "Vincent van Gogh - Green Wheat Fields, Auvers"
+sampled = ["#6a9e4a"]
+hue = 135
+
+[provenance.aqua]
+roles = ["aqua"]
+painting = "Vincent van Gogh - Wheat Fields with Reaper, Auvers"
+sampled = ["#4fa2a2"]
+hue = 195
+
+[provenance.blue]
+roles = ["blue", "blue_bg"]
+painting = "Katsushika Hokusai - Under the Wave off Kanagawa (The Great Wave)"
+sampled = ["#324c62"]
+hue = 245
+
+[provenance.purple]
+roles = ["purple"]
+painting = "Gustav Klimt - Virgin"
+sampled = ["#8e619a"]
+hue = 319

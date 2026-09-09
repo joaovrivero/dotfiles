@@ -1,0 +1,24 @@
+[theme.custom]
+accent = "{{gold}}"
+
+panel_bg = "{{bg0}}"
+sidebar_bg = "{{bg0:l=16.5}}"
+
+surface0 = "{{bg1}}"
+surface1 = "{{bg2}}"
+surface_dim = "{{bg3}}"
+
+overlay0 = "{{comment}}"
+overlay1 = "{{fg_dim:l=62:upper}}"
+
+text = "{{fg}}"
+subtext0 = "{{fg_dim}}"
+
+mauve = "{{purple}}"
+
+green = "{{green}}"
+yellow = "{{gold}}"
+red = "{{red}}"
+blue = "{{blue}}"
+teal = "{{aqua}}"
+peach = "{{orange}}"

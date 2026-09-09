@@ -1,0 +1,37 @@
+# Pinacoteca. Palette and provenance: theme/pinacoteca/colors.toml
+palette = "pinacoteca"
+
+[palettes.pinacoteca]
+bg0 = "{{bg0}}"
+bg1 = "{{bg1}}"
+bg2 = "{{bg2}}"
+bg3 = "{{bg3}}"
+comment = "{{comment}}"
+fg_dim = "{{fg_dim}}"
+fg = "{{fg}}"
+fg_bright = "{{fg_bright}}"
+red = "{{red}}"
+orange = "{{orange}}"
+gold = "{{gold}}"
+green = "{{green}}"
+aqua = "{{aqua}}"
+blue = "{{blue}}"
+purple = "{{purple}}"
+
+[character]
+success_symbol = "[❯](bold gold)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold aqua)"
+
+[cmd_duration]
+style = "fg_dim"
+
+[git_status]
+style = "red"
+
+[username]
+style_user = "purple"
+style_root = "red"
+
+[time]
+style = "fg_dim"

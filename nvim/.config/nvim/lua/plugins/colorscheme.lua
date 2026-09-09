@@ -1,16 +1,10 @@
 return {
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  -- Configure LazyVim to load
+  -- Pinacoteca is generated from a base16 palette; see colors/pinacoteca.lua
+  { "nvim-mini/mini.base16", lazy = false, priority = 1000 },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "rose-pine",
+      colorscheme = "pinacoteca",
     },
   },
 }

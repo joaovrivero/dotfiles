@@ -1,0 +1,74 @@
+# Every file that carries Pinacoteca colours, and the template it is rendered from.
+# Paths are relative to the repository root; $HOMEPAGE ports are skipped unless
+# the HOMEPAGE environment variable points at the homepage checkout.
+
+[[port]]
+template = "alacritty.toml"
+output = "alacritty/.config/alacritty/pinacoteca.toml"
+
+[[port]]
+template = "ghostty"
+output = "ghostty/.config/ghostty/themes/pinacoteca"
+
+[[port]]
+template = "btop.theme"
+output = "btop/.config/btop/themes/pinacoteca.theme"
+
+[[port]]
+template = "tmux.conf"
+output = "tmux/.config/tmux/pinacoteca.conf"
+
+[[port]]
+template = "windows-terminal.json"
+output = "theme/pinacoteca/windows-terminal.json"
+
+[[port]]
+template = "zed.json"
+output = "zed/.config/zed/themes/pinacoteca.json"
+
+[[port]]
+template = "neovim.lua"
+output = "nvim/.config/nvim/colors/pinacoteca.lua"
+
+[[port]]
+template = "wezterm.lua"
+output = "wezterm/.wezterm.lua"
+mode = "block"
+
+[[port]]
+template = "starship.toml"
+output = "starship/.config/starship.toml"
+mode = "block"
+
+[[port]]
+template = "fzf.zsh"
+output = "zsh/.zshrc"
+mode = "block"
+
+[[port]]
+template = "psreadline.ps1"
+output = "pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1"
+mode = "block"
+
+[[port]]
+template = "herdr.toml"
+output = "herdr/.config/herdr/config.toml"
+mode = "block"
+
+[[port]]
+template = "vscode.json"
+output = "vscode/.config/Code/User/settings.json"
+mode = "json"
+
+[[port]]
+template = "homepage-theme.css"
+output = "$HOMEPAGE/src/styles/theme.css"
+
+[[port]]
+template = "homepage-shiki.mjs"
+output = "$HOMEPAGE/src/lib/shiki/pinacoteca.mjs"
+
+[[port]]
+template = "homepage-palette.astro"
+output = "$HOMEPAGE/src/components/mdx/Palette.astro"
+mode = "block"

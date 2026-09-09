@@ -1,0 +1,28 @@
+{
+  "$help": "Windows Terminal fragment. The installer copies this to %LOCALAPPDATA%\\Microsoft\\Windows Terminal\\Fragments\\Pinacoteca\\. Select the scheme in Settings > Color schemes.",
+  "schemes": [
+    {
+      "name": "Pinacoteca",
+      "background": "#18130E",
+      "foreground": "#E6CCAF",
+      "cursorColor": "#D7A447",
+      "selectionBackground": "#453B32",
+      "black": "#2E2822",
+      "red": "#D67066",
+      "green": "#88AB75",
+      "yellow": "#D7A447",
+      "blue": "#799DBB",
+      "purple": "#AD8AB6",
+      "cyan": "#6CABAB",
+      "white": "#E6CCAF",
+      "brightBlack": "#7D6B59",
+      "brightRed": "#D67066",
+      "brightGreen": "#88AB75",
+      "brightYellow": "#D7A447",
+      "brightBlue": "#799DBB",
+      "brightPurple": "#AD8AB6",
+      "brightCyan": "#6CABAB",
+      "brightWhite": "#F7E5CF"
+    }
+  ]
+}

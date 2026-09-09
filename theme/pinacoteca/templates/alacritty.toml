@@ -1,0 +1,61 @@
+# Pinacoteca colours for Alacritty. Palette and provenance: theme/pinacoteca/colors.toml
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.primary]
+background = "{{bg0}}"
+foreground = "{{fg}}"
+dim_foreground = "{{fg_dim}}"
+bright_foreground = "{{fg_bright}}"
+
+[colors.cursor]
+text = "{{bg0}}"
+cursor = "{{gold}}"
+
+[colors.vi_mode_cursor]
+text = "{{bg0}}"
+cursor = "{{orange}}"
+
+[colors.selection]
+text = "{{fg_bright}}"
+background = "{{bg3}}"
+
+[colors.search.matches]
+foreground = "{{bg0}}"
+background = "{{gold}}"
+
+[colors.search.focused_match]
+foreground = "{{bg0}}"
+background = "{{orange}}"
+
+[colors.footer_bar]
+foreground = "{{fg}}"
+background = "{{bg1}}"
+
+[colors.hints.start]
+foreground = "{{bg0}}"
+background = "{{gold}}"
+
+[colors.hints.end]
+foreground = "{{bg0}}"
+background = "{{fg_dim}}"
+
+[colors.normal]
+black = "{{bg2}}"
+red = "{{red}}"
+green = "{{green}}"
+yellow = "{{gold}}"
+blue = "{{blue}}"
+magenta = "{{purple}}"
+cyan = "{{aqua}}"
+white = "{{fg}}"
+
+[colors.bright]
+black = "{{comment}}"
+red = "{{red}}"
+green = "{{green}}"
+yellow = "{{gold}}"
+blue = "{{blue}}"
+magenta = "{{purple}}"
+cyan = "{{aqua}}"
+white = "{{fg_bright}}"

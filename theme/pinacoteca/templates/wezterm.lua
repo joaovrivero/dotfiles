@@ -1,0 +1,25 @@
+    color_scheme = "pinacoteca",
+    -- Pinacoteca: palette and provenance in theme/pinacoteca/colors.toml
+    color_schemes = {
+        pinacoteca = {
+            foreground = "{{fg}}",
+            background = "{{bg0}}",
+            cursor_bg = "{{gold}}",
+            cursor_fg = "{{bg0}}",
+            cursor_border = "{{gold}}",
+            selection_bg = "{{bg3}}",
+            selection_fg = "{{fg_bright}}",
+            scrollbar_thumb = "{{bg3}}",
+            split = "{{bg3}}",
+            ansi = { "{{bg2}}", "{{red}}", "{{green}}", "{{gold}}", "{{blue}}", "{{purple}}", "{{aqua}}", "{{fg}}" },
+            brights = { "{{comment}}", "{{red}}", "{{green}}", "{{gold}}", "{{blue}}", "{{purple}}", "{{aqua}}", "{{fg_bright}}" },
+            tab_bar = {
+                background = "{{bg1}}",
+                active_tab = { bg_color = "{{gold}}", fg_color = "{{bg0}}", intensity = "Bold" },
+                inactive_tab = { bg_color = "{{bg1}}", fg_color = "{{fg_dim}}" },
+                inactive_tab_hover = { bg_color = "{{bg2}}", fg_color = "{{fg}}" },
+                new_tab = { bg_color = "{{bg1}}", fg_color = "{{comment}}" },
+                new_tab_hover = { bg_color = "{{bg2}}", fg_color = "{{gold}}" },
+            },
+        },
+    },
