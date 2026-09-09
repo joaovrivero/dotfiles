@@ -1,0 +1,41 @@
+# Herdr. Colours follow Pinacoteca; palette and provenance: theme/pinacoteca/colors.toml
+onboarding = false
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+# pinacoteca:begin
+[theme.custom]
+accent = "#d7a447"
+
+panel_bg = "#18130e"
+sidebar_bg = "#120d09"
+
+surface0 = "#211c17"
+surface1 = "#2e2822"
+surface_dim = "#453b32"
+
+overlay0 = "#7d6b59"
+overlay1 = "#988269"
+
+text = "#e6ccaf"
+subtext0 = "#b19a80"
+
+mauve = "#ad8ab6"
+
+green = "#88ab75"
+yellow = "#d7a447"
+red = "#d67066"
+blue = "#799dbb"
+teal = "#6cabab"
+peach = "#d77f47"
+# pinacoteca:end
+
+[ui]
+agent_panel_sort = "spaces"
+status_indicators = "symbols"
+show_agent_labels_on_pane_borders = false
+
+[ui.toast]
+delivery = "herdr"

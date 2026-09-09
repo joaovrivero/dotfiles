@@ -1,0 +1,61 @@
+# Pinacoteca colours for Alacritty. Palette and provenance: theme/pinacoteca/colors.toml
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.primary]
+background = "#18130e"
+foreground = "#e6ccaf"
+dim_foreground = "#b19a80"
+bright_foreground = "#f7e5cf"
+
+[colors.cursor]
+text = "#18130e"
+cursor = "#d7a447"
+
+[colors.vi_mode_cursor]
+text = "#18130e"
+cursor = "#d77f47"
+
+[colors.selection]
+text = "#f7e5cf"
+background = "#453b32"
+
+[colors.search.matches]
+foreground = "#18130e"
+background = "#d7a447"
+
+[colors.search.focused_match]
+foreground = "#18130e"
+background = "#d77f47"
+
+[colors.footer_bar]
+foreground = "#e6ccaf"
+background = "#211c17"
+
+[colors.hints.start]
+foreground = "#18130e"
+background = "#d7a447"
+
+[colors.hints.end]
+foreground = "#18130e"
+background = "#b19a80"
+
+[colors.normal]
+black = "#2e2822"
+red = "#d67066"
+green = "#88ab75"
+yellow = "#d7a447"
+blue = "#799dbb"
+magenta = "#ad8ab6"
+cyan = "#6cabab"
+white = "#e6ccaf"
+
+[colors.bright]
+black = "#7d6b59"
+red = "#d67066"
+green = "#88ab75"
+yellow = "#d7a447"
+blue = "#799dbb"
+magenta = "#ad8ab6"
+cyan = "#6cabab"
+white = "#f7e5cf"

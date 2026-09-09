@@ -1,0 +1,23 @@
+# Pinacoteca colours for Ghostty. Palette and provenance: theme/pinacoteca/colors.toml
+palette = 0=#2e2822
+palette = 1=#d67066
+palette = 2=#88ab75
+palette = 3=#d7a447
+palette = 4=#799dbb
+palette = 5=#ad8ab6
+palette = 6=#6cabab
+palette = 7=#e6ccaf
+palette = 8=#7d6b59
+palette = 9=#d67066
+palette = 10=#88ab75
+palette = 11=#d7a447
+palette = 12=#799dbb
+palette = 13=#ad8ab6
+palette = 14=#6cabab
+palette = 15=#f7e5cf
+background = #18130e
+foreground = #e6ccaf
+cursor-color = #d7a447
+cursor-text = #18130e
+selection-background = #453b32
+selection-foreground = #f7e5cf

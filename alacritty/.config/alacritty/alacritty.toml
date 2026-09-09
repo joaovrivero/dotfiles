@@ -1,0 +1,51 @@
+# Alacritty. Colours live in pinacoteca.toml; machine-specific settings such as the
+# Windows shell go in local.toml, which is not tracked (the Windows installer writes it).
+[general]
+import = ["pinacoteca.toml", "local.toml"]
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "full"
+dynamic_title = true
+option_as_alt = "Both"
+
+[window.padding]
+x = 20
+y = 20
+
+[font]
+size = 18
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+
+[cursor]
+blink_interval = 500
+blink_timeout = 5
+unfocused_hollow = false
+
+[cursor.style]
+blinking = "Off"
+shape = "Block"
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[mouse]
+hide_when_typing = true
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
