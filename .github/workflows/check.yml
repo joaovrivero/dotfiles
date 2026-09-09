@@ -1,0 +1,84 @@
+name: Check dotfiles
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  arch:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - name: Install validation tools
+        run: >-
+          pacman -Syu --noconfirm --needed
+          git jq lua python shellcheck stow stylua zsh
+
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Run checks
+        run: ./scripts/check.sh
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Dry-run the Windows installer
+        shell: pwsh
+        run: pwsh -File .\platforms\windows\install.ps1 -DryRun
+
+      - name: Dry-run the accent script
+        shell: pwsh
+        run: pwsh -File .\theme\pinacoteca\windows-accent.ps1 -DryRun
+
+  nixos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Evaluate the flake
+        run: nix flake check --no-build --no-write-lock-file
+
+      - name: Check Nix formatting
+        run: >-
+          nix run .#formatter.x86_64-linux -- --check
+          flake.nix
+          platforms/nixos/settings.nix
+          platforms/nixos/modules/home.nix
+          platforms/nixos/modules/nixos.nix
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Parse and dry-run the installer
+        shell: pwsh
+        run: |
+          $tokens = $null
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile(
+            "platforms/windows/install.ps1", [ref]$tokens, [ref]$errors
+          )
+          if ($errors.Count) {
+            $errors | Out-String | Write-Error
+            exit 1
+          }
+          ./platforms/windows/install.ps1 -DryRun

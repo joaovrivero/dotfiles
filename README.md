@@ -1,44 +1,107 @@
-# My Arch Linux Development Environment
+# Jojo's dotfiles
 
-This repository contains my personal dotfiles and an automated setup script to provision a complete development environment on a fresh Arch Linux (or Arch-based WSL) instance.
+A development environment for Arch Linux, NixOS, and Windows. The shell,
+editor, prompt, and terminal settings are shared; each platform has its own
+package manager and installation path.
 
-It includes configurations for **Zsh**, **Tmux**, and **Neovim (LazyVim)**.
+## Pick your platform
 
-## 🚀 One-Command Installation
+| Platform | Package/config manager | Start here |
+| --- | --- | --- |
+| Arch Linux or Arch on WSL | `pacman`, `yay`, GNU Stow | [Arch guide](./platforms/arch/README.md) |
+| NixOS | Nix flakes and Home Manager | [NixOS guide](./platforms/nixos/README.md) |
+| Windows 10 or 11 | PowerShell and optional WinGet | [Windows guide](./platforms/windows/README.md) |
 
-**Prerequisite:** A fresh Arch Linux installation with `git` installed.
-If `git` is not installed, run: `sudo pacman -Syu --noconfirm git`
-
-Then, run this single command to clone the repository and start the setup:
-
-```bash
-git clone [https://github.com/joaovrivero/dotfiles.git](https://github.com/joaovrivero/dotfiles.git) ~/.dotfiles && cd ~/.dotfiles && ./install.sh
-```
-
-The script will:
-- Install `yay` as an AUR helper.
-- Install all terminal tools, development languages, and utilities.
-- Configure and enable Docker.
-- Set up Neovim with the LazyVim starter.
-- Change your default shell to Zsh.
-
-After the script finishes, you need to **reboot or log out** for all changes (like the Docker group and default shell) to take effect.
-
-## 📦 What's Included?
-
--   **Shell:** Zsh with plugins managed by the `.zshrc` config.
--   **Terminal Tools:** `eza`, `fzf`, `ripgrep`, `btop`, `starship`, `tmux`, and more.
--   **Editor:** Neovim with LazyVim. Your custom configs from this repo will be automatically applied.
--   **Development:** `mise` (for managing tool versions), `cargo`, `clang`, Docker, `lazygit`, and `lazydocker`.
-
-## Symlinking Configurations
-
-After the script runs, your configurations need to be linked. If you use `stow`, you can do it with:
+Linux users can start with the dispatcher:
 
 ```bash
-# First, install stow
-sudo pacman -S stow
-
-# From within the ~/.dotfiles directory, run:
-stow */
+git clone https://github.com/joaovrivero/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./install.sh --dry-run
+./install.sh
 ```
+
+It reads `/etc/os-release` and selects Arch or NixOS. You can override detection
+with `--platform arch` or `--platform nixos`.
+
+Windows uses PowerShell from a Windows clone of the repository:
+
+```powershell
+pwsh -File .\platforms\windows\install.ps1 -DryRun
+pwsh -File .\platforms\windows\install.ps1
+```
+
+## What is shared
+
+```text
+.
+├── alacritty/  terminal settings and colours
+├── atuin/      shell history
+├── btop/       system monitor theme
+├── ghostty/    terminal settings and colours
+├── herdr/      agent workspace manager settings and colours
+├── mise/       tool versions
+├── nvim/       Neovim and LazyVim
+├── pwsh/       PowerShell profile
+├── starship/   prompt
+├── theme/      Pinacoteca: the palette, its provenance, and Windows extras
+├── tmux/       shared bindings plus the TPM entry point
+├── vscode/     editor settings
+├── wezterm/    terminal settings
+├── zed/        editor settings and theme
+└── zsh/        shell aliases, history, and tool initialization
+```
+
+All of them use the [Pinacoteca](./theme/pinacoteca/README.md) theme, a palette
+sampled from the paintings in the wallpaper slideshow. `theme/pinacoteca/colors.toml`
+is the source of truth; each tool carries its own copy of the colours.
+
+Arch links these directories with Stow. NixOS points Home Manager at the same
+files. Windows links the subset used by native Windows applications. There are
+no copied platform variants to keep in sync.
+
+## Nix flake outputs
+
+The root [flake.nix](./flake.nix) provides:
+
+- `homeConfigurations.<username>` for the ready-to-run profile in
+  `platforms/nixos/settings.nix`.
+- `homeModules.default` for an existing Home Manager configuration.
+- `nixosModules.default` for system settings such as Zsh and optional Docker.
+
+## Make it yours
+
+Everything personal is isolated so a fork only needs to touch a few places:
+
+- `platforms/nixos/settings.nix` holds the username, home directory and state
+  version for Home Manager.
+- Machine-specific settings that should not be committed go in files the
+  configs load when present: `~/.zshrc.local`, `~/.tmux.local.conf`,
+  `~/.wezterm.local.lua` (return a function that receives the config), and on
+  Windows `%APPDATA%\alacritty\local.toml`.
+- `zsh/.zshrc` aliases, `mise/` tool versions and `herdr/` are my daily
+  drivers; replace them freely.
+- The colours live in [theme/pinacoteca](./theme/pinacoteca/README.md). Change
+  `colors.toml`, run `python3 theme/pinacoteca/tools/build.py`, and every
+  terminal, editor and prompt config is rendered from it.
+
+To see how a machine relates to the repository, run the doctor. It reports what
+is linked, what exists locally but points elsewhere, what is missing, and which
+tools are installed:
+
+```bash
+./scripts/doctor.sh
+```
+
+On Arch, `./install.sh --links-only` links the dotfiles without installing
+packages; add `--gui` to include the desktop applications.
+
+## Check changes
+
+```bash
+./scripts/check.sh
+```
+
+The check script validates shell and Lua syntax, formatting, JSON, TOML, Stow
+layout, and the Nix flake when Nix is installed. GitHub Actions runs the same
+checks on every push and pull request.
