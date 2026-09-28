@@ -24,21 +24,6 @@ jobs:
       - name: Run checks
         run: ./scripts/check.sh
 
-  windows:
-    runs-on: windows-latest
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v6
-
-      - name: Dry-run the Windows installer
-        shell: pwsh
-        run: pwsh -File .\platforms\windows\install.ps1 -DryRun
-
-      - name: Dry-run the accent script
-        shell: pwsh
-        run: pwsh -File .\theme\pinacoteca\windows-accent.ps1 -DryRun
-
   nixos:
     runs-on: ubuntu-latest
 
@@ -82,3 +67,7 @@ jobs:
             exit 1
           }
           ./platforms/windows/install.ps1 -DryRun
+
+      - name: Dry-run the accent script
+        shell: pwsh
+        run: pwsh -File .\theme\pinacoteca\windows-accent.ps1 -DryRun
