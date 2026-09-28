@@ -48,18 +48,20 @@ the colours in the ports by hand.
 
 | Tool | File |
 | --- | --- |
-| WezTerm | `wezterm/.wezterm.lua` (`color_schemes.pinacoteca`) |
-| Neovim | `nvim/.config/nvim/colors/pinacoteca.lua`, generated with mini.base16 |
-| tmux | `tmux/.config/tmux/pinacoteca.conf` |
-| Starship | `starship/.config/starship.toml` (`palettes.pinacoteca`) |
-| VS Code | `vscode/.config/Code/User/settings.json` on top of Default Dark Modern |
-| PowerShell | `pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1` (PSReadLine) |
-| fzf | `zsh/.zshrc` (`FZF_DEFAULT_OPTS`) |
-| btop | `btop/.config/btop/themes/pinacoteca.theme`, select it in btop's menu |
-| Alacritty | `alacritty/.config/alacritty/pinacoteca.toml`, imported by `alacritty.toml` |
-| Ghostty | `ghostty/.config/ghostty/themes/pinacoteca` |
-| Zed | `zed/.config/zed/themes/pinacoteca.json` |
-| Herdr | `herdr/.config/herdr/config.toml` (`theme.custom`) |
+| WezTerm | `.config/wezterm/wezterm.lua` (`color_schemes.pinacoteca`) |
+| Neovim | `.config/nvim/colors/pinacoteca.lua`, generated with mini.base16 |
+| tmux | `.config/tmux/pinacoteca.conf`, a status line laid out after [tokyo-night-tmux](https://github.com/janoamaral/tokyo-night-tmux), and its git segment `pinacoteca-git.sh` |
+| Starship | `.config/starship.toml` (`palettes.pinacoteca`) |
+| VS Code | `.config/Code/User/settings.json` on top of Default Dark Modern |
+| PowerShell | `.config/powershell/Microsoft.PowerShell_profile.ps1` (PSReadLine) |
+| fzf | `home/.zshrc` (`FZF_DEFAULT_OPTS`) |
+| btop | `.config/btop/themes/pinacoteca.theme`, select it in btop's menu |
+| Alacritty | `.config/alacritty/pinacoteca.toml`, imported by `alacritty.toml` |
+| Ghostty | `.config/ghostty/themes/pinacoteca` |
+| Zed | `.config/zed/themes/pinacoteca.json` |
+| Herdr | `.config/herdr/config.toml` (`theme.custom`) |
+| Spotify | `.config/spicetify/Themes/Pinacoteca`, then `spicetify config current_theme Pinacoteca color_scheme Pinacoteca` and `spicetify apply` |
+| T3 Code | `theme/pinacoteca/t3code.json`, imported in Settings → Themes |
 | Windows Terminal | `theme/pinacoteca/windows-terminal.json`, installed as a fragment |
 | Windows accent | `theme/pinacoteca/windows-accent.ps1` sets the accent to gold |
 | Homepage | `homepage-v2/src/styles/theme.css` and `src/lib/shiki/pinacoteca.mjs` |

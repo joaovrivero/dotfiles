@@ -27,8 +27,11 @@ to the `docker` group:
 ./install.sh --platform arch --docker
 ```
 
-Existing configuration files are moved to timestamped backup paths before Stow
-creates links. The script is safe to rerun.
+Stow links `home/` into `~` and `.config/` into `~/.config`; without `--gui`
+the desktop applications' entries in `.config/` are skipped. Existing
+configuration files are moved to timestamped backup paths before Stow creates
+links, and dangling links left by the older one-package-per-tool layout are
+removed. The script is safe to rerun.
 
 ## What Arch manages
 

@@ -13,4 +13,7 @@ Thumbs.db
 # Nix build outputs
 /result
 /result-*
-alacritty/.config/alacritty/local.toml
+.config/alacritty/local.toml
+media/.env
+__pycache__/
+.config/tmux/plugins/

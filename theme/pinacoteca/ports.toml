@@ -4,61 +4,73 @@
 
 [[port]]
 template = "alacritty.toml"
-output = "alacritty/.config/alacritty/pinacoteca.toml"
+output = ".config/alacritty/pinacoteca.toml"
 
 [[port]]
 template = "ghostty"
-output = "ghostty/.config/ghostty/themes/pinacoteca"
+output = ".config/ghostty/themes/pinacoteca"
 
 [[port]]
 template = "btop.theme"
-output = "btop/.config/btop/themes/pinacoteca.theme"
+output = ".config/btop/themes/pinacoteca.theme"
 
 [[port]]
 template = "tmux.conf"
-output = "tmux/.config/tmux/pinacoteca.conf"
+output = ".config/tmux/pinacoteca.conf"
+
+[[port]]
+template = "tmux-git.sh"
+output = ".config/tmux/pinacoteca-git.sh"
 
 [[port]]
 template = "windows-terminal.json"
 output = "theme/pinacoteca/windows-terminal.json"
 
 [[port]]
+template = "t3code.json"
+output = "theme/pinacoteca/t3code.json"
+
+[[port]]
 template = "zed.json"
-output = "zed/.config/zed/themes/pinacoteca.json"
+output = ".config/zed/themes/pinacoteca.json"
 
 [[port]]
 template = "neovim.lua"
-output = "nvim/.config/nvim/colors/pinacoteca.lua"
+output = ".config/nvim/colors/pinacoteca.lua"
 
 [[port]]
 template = "wezterm.lua"
-output = "wezterm/.wezterm.lua"
+output = ".config/wezterm/wezterm.lua"
 mode = "block"
 
 [[port]]
 template = "starship.toml"
-output = "starship/.config/starship.toml"
+output = ".config/starship.toml"
 mode = "block"
 
 [[port]]
 template = "fzf.zsh"
-output = "zsh/.zshrc"
+output = "home/.zshrc"
 mode = "block"
 
 [[port]]
 template = "psreadline.ps1"
-output = "pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1"
+output = ".config/powershell/Microsoft.PowerShell_profile.ps1"
 mode = "block"
 
 [[port]]
 template = "herdr.toml"
-output = "herdr/.config/herdr/config.toml"
+output = ".config/herdr/config.toml"
 mode = "block"
 
 [[port]]
 template = "vscode.json"
-output = "vscode/.config/Code/User/settings.json"
+output = ".config/Code/User/settings.json"
 mode = "json"
+
+[[port]]
+template = "spicetify-color.ini"
+output = ".config/spicetify/Themes/Pinacoteca/color.ini"
 
 [[port]]
 template = "homepage-theme.css"

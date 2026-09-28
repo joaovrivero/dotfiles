@@ -7,8 +7,7 @@ set -Eeuo pipefail
 
 REPO_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 readonly REPO_DIR
-readonly -a PACKAGES=(zsh tmux starship nvim btop atuin mise ghostty herdr alacritty zed wezterm vscode pwsh)
-readonly -a TOOLS=(zsh tmux starship nvim btop atuin mise ghostty herdr alacritty zeditor wezterm code pwsh stow git fzf eza zoxide bat lazygit fastfetch)
+readonly -a TOOLS=(zsh tmux starship nvim btop atuin mise ghostty herdr alacritty zeditor spicetify wezterm code pwsh stow git fzf eza zoxide bat lazygit fastfetch)
 
 green() { printf '\033[32m%s\033[0m' "$1"; }
 yellow() { printf '\033[33m%s\033[0m' "$1"; }
@@ -17,17 +16,9 @@ dim() { printf '\033[2m%s\033[0m' "$1"; }
 
 problems=0
 
-# The top-level entries a stow package would create in $HOME. Files directly
-# under the package map to $HOME/<file>; .config/<name> maps to
-# $HOME/.config/<name>, except nvim-style directories are compared as a whole.
-targets_for() {
-    local package="$1"
-    local dir="$REPO_DIR/$package"
-    find "$dir" -mindepth 1 -maxdepth 1 ! -name '.config' -printf '%P\n'
-    if [[ -d "$dir/.config" ]]; then
-        find "$dir/.config" -mindepth 1 -maxdepth 1 -printf '.config/%P\n'
-    fi
-}
+# home/ is linked into $HOME and .config/ into $HOME/.config. Each top-level
+# entry is checked as a whole.
+readonly -a ROOTS=("home:$HOME" ".config:$HOME/.config")
 
 # True when every file below $1 is reachable from $2 through symlinks.
 dir_linked() {
@@ -39,8 +30,8 @@ dir_linked() {
 }
 
 check_target() {
-    local package="$1" rel="$2"
-    local target="$HOME/$rel" source="$REPO_DIR/$package/$rel"
+    local source="$1" target="$2"
+    local rel="${target#"$HOME"/}"
 
     if [[ -L "$target" ]]; then
         local resolved
@@ -74,12 +65,12 @@ check_target() {
 printf 'Repository: %s\n' "$REPO_DIR"
 printf 'Home:       %s\n\n' "$HOME"
 
-for package in "${PACKAGES[@]}"; do
-    [[ -d "$REPO_DIR/$package" ]] || continue
-    printf '%s\n' "$package"
-    while IFS= read -r rel; do
-        check_target "$package" "$rel"
-    done < <(targets_for "$package")
+for root in "${ROOTS[@]}"; do
+    dir="${root%%:*}" target_dir="${root#*:}"
+    printf '%s/\n' "$dir"
+    while IFS= read -r name; do
+        check_target "$REPO_DIR/$dir/$name" "$target_dir/$name"
+    done < <(find "$REPO_DIR/$dir" -mindepth 1 -maxdepth 1 -printf '%P\n' | sort -f)
 done
 
 printf '\nTools\n'

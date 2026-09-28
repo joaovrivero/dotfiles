@@ -35,21 +35,25 @@ pwsh -File .\platforms\windows\install.ps1
 
 ```text
 .
-├── alacritty/  terminal settings and colours
-├── atuin/      shell history
-├── btop/       system monitor theme
-├── ghostty/    terminal settings and colours
-├── herdr/      agent workspace manager settings and colours
-├── mise/       tool versions
-├── nvim/       Neovim and LazyVim
-├── pwsh/       PowerShell profile
-├── starship/   prompt
-├── theme/      Pinacoteca: the palette, its provenance, and Windows extras
-├── tmux/       shared bindings plus the TPM entry point
-├── vscode/     editor settings
-├── wezterm/    terminal settings
-├── zed/        editor settings and theme
-└── zsh/        shell aliases, history, and tool initialization
+├── .config/            linked into ~/.config
+│   ├── alacritty/      terminal settings and colours
+│   ├── atuin/          shell history
+│   ├── btop/           system monitor theme
+│   ├── Code/           VS Code settings
+│   ├── ghostty/        terminal settings and colours
+│   ├── herdr/          agent workspace manager settings and colours
+│   ├── mise/           tool versions
+│   ├── nvim/           Neovim and LazyVim
+│   ├── powershell/     PowerShell profile
+│   ├── spicetify/      Spotify theme
+│   ├── starship.toml   prompt
+│   ├── tmux/           bindings, TPM entry point and the Pinacoteca status line
+│   ├── wezterm/        terminal settings
+│   └── zed/            editor settings and theme
+├── home/               linked into ~: .zshrc (aliases, history, tool initialization)
+├── media/              Akita's download stack for the TV and manga: Docker on WSL, files on Windows
+├── platforms/          installers for Arch, NixOS and Windows
+└── theme/              Pinacoteca: the palette, its provenance, and Windows extras
 ```
 
 All of them use the [Pinacoteca](./theme/pinacoteca/README.md) theme, a palette
@@ -79,7 +83,7 @@ Everything personal is isolated so a fork only needs to touch a few places:
   configs load when present: `~/.zshrc.local`, `~/.tmux.local.conf`,
   `~/.wezterm.local.lua` (return a function that receives the config), and on
   Windows `%APPDATA%\alacritty\local.toml`.
-- `zsh/.zshrc` aliases, `mise/` tool versions and `herdr/` are my daily
+- `home/.zshrc` aliases, `.config/mise/` tool versions and `.config/herdr/` are my daily
   drivers; replace them freely.
 - The colours live in [theme/pinacoteca](./theme/pinacoteca/README.md). Change
   `colors.toml`, run `python3 theme/pinacoteca/tools/build.py`, and every

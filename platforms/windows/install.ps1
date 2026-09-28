@@ -32,7 +32,10 @@ function Install-WingetPackages {
         'Alacritty.Alacritty'
         'DEVCOM.JetBrainsMonoNerdFont'
         'Git.Git'
+        'XBMCFoundation.Kodi'
+        'ciromattia.KCC'
         'Microsoft.PowerShell'
+        'Spicetify.Spicetify'
         'Microsoft.VisualStudioCode'
         'Neovim.Neovim'
         'Starship.Starship'
@@ -104,42 +107,56 @@ Write-Step 'Linking Windows configuration files'
 $documents = [Environment]::GetFolderPath('MyDocuments')
 $links = @(
     @{
-        Source = Join-Path $repoRoot 'wezterm\.wezterm.lua'
-        Target = Join-Path $HOME '.wezterm.lua'
+        Source = Join-Path $repoRoot '.config\wezterm\wezterm.lua'
+        Target = Join-Path $HOME '.config\wezterm\wezterm.lua'
     }
     @{
-        Source = Join-Path $repoRoot 'pwsh\.config\powershell\Microsoft.PowerShell_profile.ps1'
+        Source = Join-Path $repoRoot '.config\powershell\Microsoft.PowerShell_profile.ps1'
         Target = Join-Path $documents 'PowerShell\Microsoft.PowerShell_profile.ps1'
     }
     @{
-        Source = Join-Path $repoRoot 'vscode\.config\Code\User\settings.json'
+        Source = Join-Path $repoRoot '.config\Code\User\settings.json'
         Target = Join-Path $env:APPDATA 'Code\User\settings.json'
     }
     @{
-        Source = Join-Path $repoRoot 'nvim\.config\nvim'
+        Source = Join-Path $repoRoot '.config\nvim'
         Target = Join-Path $env:LOCALAPPDATA 'nvim'
     }
     @{
-        Source = Join-Path $repoRoot 'starship\.config\starship.toml'
+        Source = Join-Path $repoRoot '.config\starship.toml'
         Target = Join-Path $HOME '.config\starship.toml'
     }
     @{
-        Source = Join-Path $repoRoot 'alacritty\.config\alacritty\alacritty.toml'
+        Source = Join-Path $repoRoot '.config\alacritty\alacritty.toml'
         Target = Join-Path $env:APPDATA 'alacritty\alacritty.toml'
     }
     @{
-        Source = Join-Path $repoRoot 'alacritty\.config\alacritty\pinacoteca.toml'
+        Source = Join-Path $repoRoot '.config\alacritty\pinacoteca.toml'
         Target = Join-Path $env:APPDATA 'alacritty\pinacoteca.toml'
     }
     @{
-        Source = Join-Path $repoRoot 'zed\.config\zed\settings.json'
+        Source = Join-Path $repoRoot '.config\zed\settings.json'
         Target = Join-Path $env:APPDATA 'Zed\settings.json'
     }
     @{
-        Source = Join-Path $repoRoot 'zed\.config\zed\themes\pinacoteca.json'
+        Source = Join-Path $repoRoot '.config\zed\themes\pinacoteca.json'
         Target = Join-Path $env:APPDATA 'Zed\themes\pinacoteca.json'
     }
+    @{
+        Source = Join-Path $repoRoot '.config\spicetify\Themes\Pinacoteca'
+        Target = Join-Path $env:APPDATA 'spicetify\Themes\Pinacoteca'
+    }
 )
+
+# WezTerm reads ~/.wezterm.lua before ~/.config/wezterm/wezterm.lua, so move an older one aside.
+$legacyWezterm = Get-Item -LiteralPath (Join-Path $HOME '.wezterm.lua') -Force -ErrorAction SilentlyContinue
+if ($legacyWezterm) {
+    $backup = "$($legacyWezterm.FullName).bak.$timestamp"
+    Write-Host "  backup: $($legacyWezterm.FullName) -> $backup"
+    if (-not $DryRun) {
+        Move-Item -LiteralPath $legacyWezterm.FullName -Destination $backup
+    }
+}
 
 foreach ($link in $links) {
     Set-DotfileLink -Source $link.Source -Target $link.Target

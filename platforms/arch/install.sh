@@ -5,14 +5,14 @@ set -Eeuo pipefail
 REPO_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
 BACKUP_TIMESTAMP="$(date +%Y.%m.%d-%H.%M.%S)"
 readonly REPO_DIR BACKUP_TIMESTAMP
-readonly -a CORE_STOW_PACKAGES=(zsh tmux starship nvim btop atuin mise ghostty herdr)
-readonly -a GUI_STOW_PACKAGES=(wezterm alacritty zed vscode pwsh)
+# home/ is stowed into $HOME and .config/ into ~/.config. These .config entries
+# belong to desktop applications and are only linked with --gui.
+readonly -a GUI_CONFIGS=(alacritty Code powershell spicetify wezterm zed)
 
 DRY_RUN=false
 WITH_DOCKER=false
 WITH_GUI=false
 LINKS_ONLY=false
-STOW_PACKAGES=("${CORE_STOW_PACKAGES[@]}")
 
 msg() {
     printf '\n\033[1;34m==>\033[0m %s\n' "$1"
@@ -103,8 +103,7 @@ install_packages() {
     )
 
     if $WITH_GUI; then
-        packages+=(alacritty ghostty powershell-bin visual-studio-code-bin wezterm zed)
-        STOW_PACKAGES+=("${GUI_STOW_PACKAGES[@]}")
+        packages+=(alacritty ghostty powershell-bin spicetify-cli visual-studio-code-bin wezterm zed)
     fi
 
     if $DRY_RUN; then
@@ -121,7 +120,7 @@ backup_target() {
 
     if [[ -L "$target" ]]; then
         local resolved
-        resolved="$(readlink -f -- "$target" 2>/dev/null || true)"
+        resolved="$(readlink -m -- "$target")"
         [[ "$resolved" == "$REPO_DIR"/* ]] && return 0
     fi
 
@@ -132,12 +131,30 @@ backup_target() {
     fi
 }
 
+# Earlier layouts stowed one package per tool (nvim/.config/nvim, tmux/.tmux.conf,
+# ...). Their links now dangle and Stow refuses to replace them, so remove them.
+prune_stale_links() {
+    local link resolved
+    while IFS= read -r -d '' link; do
+        resolved="$(readlink -m -- "$link")"
+        [[ "$resolved" == "$REPO_DIR"/* && ! -e "$resolved" ]] || continue
+        warn "Removing stale link $link"
+        if ! $DRY_RUN; then
+            run rm -- "$link"
+        fi
+    done < <(
+        find "$HOME" -maxdepth 1 -type l -print0
+        find "$HOME/.config" -maxdepth 4 -type l -print0 2>/dev/null
+    )
+}
+
 link_dotfiles() {
     msg "Linking dotfiles with GNU Stow"
 
+    prune_stale_links
+
     local targets=(
         "$HOME/.zshrc"
-        "$HOME/.tmux.conf"
         "$HOME/.config/tmux"
         "$HOME/.config/starship.toml"
         "$HOME/.config/nvim"
@@ -149,9 +166,10 @@ link_dotfiles() {
     )
     if $WITH_GUI; then
         targets+=(
-            "$HOME/.wezterm.lua"
+            "$HOME/.config/wezterm"
             "$HOME/.config/alacritty"
             "$HOME/.config/zed"
+            "$HOME/.config/spicetify/Themes/Pinacoteca"
             "$HOME/.config/Code/User/settings.json"
             "$HOME/.config/powershell/Microsoft.PowerShell_profile.ps1"
         )
@@ -161,10 +179,20 @@ link_dotfiles() {
         backup_target "$target"
     done
 
+    local config_stow=(stow --restow --dir="$REPO_DIR" --target="$HOME/.config")
+    if ! $WITH_GUI; then
+        local ignored
+        ignored="$(IFS='|'; printf '%s' "${GUI_CONFIGS[*]}")"
+        config_stow+=(--ignore="^($ignored)\$")
+    fi
+
     if $DRY_RUN; then
-        printf '  stow --restow --dir=%q --target=%q %s\n' "$REPO_DIR" "$HOME" "${STOW_PACKAGES[*]}"
+        printf '  stow --restow --dir=%q --target=%q home\n' "$REPO_DIR" "$HOME"
+        printf '  %s .config\n' "${config_stow[*]}"
     else
-        run stow --restow --dir="$REPO_DIR" --target="$HOME" "${STOW_PACKAGES[@]}"
+        run mkdir -p -- "$HOME/.config"
+        run stow --restow --dir="$REPO_DIR" --target="$HOME" home
+        run "${config_stow[@]}" .config
     fi
 }
 
@@ -257,9 +285,6 @@ main() {
     parse_args "$@"
     require_arch
     if $LINKS_ONLY; then
-        if $WITH_GUI; then
-            STOW_PACKAGES+=("${GUI_STOW_PACKAGES[@]}")
-        fi
         link_dotfiles
         setup_tpm
     else

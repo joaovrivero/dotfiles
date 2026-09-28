@@ -1,0 +1,88 @@
+/* Pinacoteca for Spicetify. Colours come from color.ini through --spice-* variables. */
+
+/* The wall: one flat surface, no gradients or elevation tints. */
+.Root__top-container,
+.main-view-container,
+.main-view-container__scroll-node-child,
+.main-topBar-background,
+.main-entityHeader-backgroundColor,
+.main-actionBarBackground-background,
+.main-home-homeHeader {
+  background: var(--spice-main) !important;
+  background-image: none !important;
+}
+
+.Root__nav-bar,
+.main-yourLibraryX-entryPoints,
+.main-yourLibraryX-libraryContainer {
+  background: var(--spice-sidebar) !important;
+}
+
+.Root__now-playing-bar,
+.main-nowPlayingBar-nowPlayingBar {
+  background: var(--spice-player) !important;
+  border-top: 1px solid var(--spice-border);
+}
+
+/* Cards and rows sit one step up the ladder. */
+.main-card-card,
+.main-entityHeader-container.main-entityHeader-nonWrapped,
+.main-shelf-shelf .main-card-card:hover {
+  background: var(--spice-card) !important;
+}
+
+.main-trackList-trackListRow:hover,
+.main-trackList-trackListRow.main-trackList-selected {
+  background: var(--spice-highlight) !important;
+}
+
+/* Gold leaf marks the playing track, the progress and the active navigation. */
+.main-trackList-playingIcon,
+.main-trackList-trackListRow.main-trackList-active .main-trackList-rowTitle,
+.main-nowPlayingWidget-trackInfo .main-trackInfo-name a,
+.main-yourLibraryX-navLinkActive,
+.main-navBar-navBarLinkActive {
+  color: var(--spice-button) !important;
+}
+
+.progress-bar,
+.volume-bar {
+  --fg-color: var(--spice-button) !important;
+  --bg-color: var(--spice-button-disabled) !important;
+}
+
+.progress-bar__slider {
+  background-color: var(--spice-button-active) !important;
+}
+
+.main-playButton-PlayButton > button,
+.main-playPauseButton-button {
+  background-color: var(--spice-button) !important;
+  color: var(--spice-main) !important;
+}
+
+.main-playButton-PlayButton > button:hover,
+.main-playPauseButton-button:hover {
+  background-color: var(--spice-button-active) !important;
+}
+
+/* Quiet chrome. */
+::-webkit-scrollbar-thumb {
+  background-color: var(--spice-button-disabled) !important;
+  border-radius: 8px;
+}
+
+.main-contextMenu-menu {
+  background: var(--spice-card) !important;
+  border: 1px solid var(--spice-border);
+}
+
+.main-contextMenu-menuItemButton:hover,
+.main-contextMenu-menuItemButton:focus {
+  background: var(--spice-highlight) !important;
+}
+
+.x-toast-message {
+  background: var(--spice-notification) !important;
+  color: var(--spice-main) !important;
+}

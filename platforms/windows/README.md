@@ -32,7 +32,7 @@ pwsh -File .\platforms\windows\install.ps1 -InstallPackages
 ```
 
 The package option uses WinGet to install Git, PowerShell, VS Code, Neovim,
-Starship, WezTerm, Alacritty, Zed, the JetBrains Mono Nerd Font and the usual
+Starship, WezTerm, Alacritty, Zed, Spicetify, Kodi, Kindle Comic Converter, the JetBrains Mono Nerd Font and the usual
 CLI tools, and also installs the `Terminal-Icons` and `PSFzf` PowerShell
 modules. Existing target files get timestamped backups.
 
