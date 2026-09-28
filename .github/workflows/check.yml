@@ -22,7 +22,11 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Run checks
-        run: ./scripts/check.sh
+        run: |
+          # The container runs as root but the checkout belongs to the runner
+          # user, so git treats it as unsafe and check.sh's git diff fails.
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          ./scripts/check.sh
 
   nixos:
     runs-on: ubuntu-latest
