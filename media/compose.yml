@@ -1,0 +1,182 @@
+# Download automation for the TV, adapted from akitaonrails/plex_home_server_docker.
+# Runs in Docker on WSL; the files land on a Windows drive so Kodi can play them.
+# `configure.py` applies the settings from Akita's article. See README.md.
+
+name: media
+
+x-env: &env
+  PUID: ${PUID:-1000}
+  PGID: ${PGID:-1000}
+  TZ: ${TZ:-America/Sao_Paulo}
+
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    restart: unless-stopped
+    environment:
+      <<: *env
+      WEBUI_PORT: 8080
+      TORRENTING_PORT: ${TORRENTING_PORT:-52817}
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/qbittorrent:/config
+      - ${MEDIA_ROOT:-/mnt/d/Media}:/data
+    ports:
+      - 127.0.0.1:8080:8080
+      - ${TORRENTING_PORT:-52817}:${TORRENTING_PORT:-52817}
+      - ${TORRENTING_PORT:-52817}:${TORRENTING_PORT:-52817}/udp
+
+  # Manual searches from qBittorrent's search tab. Radarr and Sonarr get their
+  # indexers from Prowlarr, never from Jackett.
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    restart: unless-stopped
+    depends_on:
+      - flaresolverr
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/jackett:/config
+    ports:
+      - 127.0.0.1:9117:9117
+
+  # The only place indexers are managed; it syncs them to Radarr and Sonarr.
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    depends_on:
+      - flaresolverr
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/prowlarr:/config
+    ports:
+      - 127.0.0.1:9696:9696
+
+  # Solves the Cloudflare checks some indexers put in front of their search.
+  flaresolverr:
+    image: flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+    ports:
+      - 127.0.0.1:8191:8191
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
+    depends_on:
+      - qbittorrent
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/radarr:/config
+      - ${MEDIA_ROOT:-/mnt/d/Media}:/data
+    ports:
+      - 127.0.0.1:7878:7878
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    depends_on:
+      - qbittorrent
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/sonarr:/config
+      - ${MEDIA_ROOT:-/mnt/d/Media}:/data
+    ports:
+      - 127.0.0.1:8989:8989
+
+  # Bazarr must see the library at the same paths as Radarr and Sonarr.
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/bazarr:/config
+      - ${MEDIA_ROOT:-/mnt/d/Media}/media:/data/media
+    ports:
+      - 127.0.0.1:6767:6767
+
+  # Once a day, removes downloads stuck on metadata or stalled for 72 hours and
+  # blocklists them so Radarr and Sonarr grab another release.
+  janitor:
+    image: python:3-alpine
+    restart: unless-stopped
+    depends_on:
+      - radarr
+      - sonarr
+    command: ["python", "-u", "/app/janitor.py"]
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+      STALLED_HOURS: ${STALLED_HOURS:-72}
+    volumes:
+      - ./janitor.py:/app/janitor.py:ro
+      - ${CONFIG_ROOT:-~/.local/share/media}/radarr:/keys/radarr:ro
+      - ${CONFIG_ROOT:-~/.local/share/media}/sonarr:/keys/sonarr:ro
+
+  # Manga, replacing Akita's Kaizoku (archived in 2025). Suwayomi downloads
+  # chapters as CBZ through Mihon/Tachiyomi extensions; Kavita reads them in the
+  # browser, over OPDS apps, and tracks progress. Enable with COMPOSE_PROFILES=manga.
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:stable
+    profiles: [manga]
+    restart: unless-stopped
+    depends_on:
+      - flaresolverr
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+      DOWNLOAD_AS_CBZ: "true"
+      AUTO_DOWNLOAD_CHAPTERS: "true"
+      # Reading happens in Kavita, so Suwayomi never sees chapters as read.
+      AUTO_DOWNLOAD_EXCLUDE_UNREAD: "false"
+      FLARESOLVERR_ENABLED: "true"
+      FLARESOLVERR_URL: http://flaresolverr:8191
+    volumes:
+      # The downloads mount must come first, as the image's documentation requires.
+      - ${MEDIA_ROOT:-/mnt/d/Media}/manga:/home/suwayomi/.local/share/Tachidesk/downloads
+      - ${CONFIG_ROOT:-~/.local/share/media}/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    ports:
+      - 127.0.0.1:4567:4567
+
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    profiles: [manga]
+    restart: unless-stopped
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/kavita:/config
+      - ${MEDIA_ROOT:-/mnt/d/Media}/manga:/data/manga:ro
+    ports:
+      - 5000:5000
+
+  # Optional streaming server for phones, other TVs or remote viewing.
+  # Start it with `docker compose --profile server up -d`.
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    profiles: [server]
+    restart: unless-stopped
+    environment: *env
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/jellyfin:/config
+      - ${MEDIA_ROOT:-/mnt/d/Media}/media:/data/media:ro
+    ports:
+      - 8096:8096
+    # Hardware transcoding on the NVIDIA card needs nvidia-container-toolkit.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu, video]
+
+  # Request and discovery page. It signs in through Jellyfin, so it shares its profile.
+  seerr:
+    image: seerr/seerr:latest
+    profiles: [server]
+    restart: unless-stopped
+    init: true
+    user: ${PUID:-1000}:${PGID:-1000}
+    environment:
+      TZ: ${TZ:-America/Sao_Paulo}
+    volumes:
+      - ${CONFIG_ROOT:-~/.local/share/media}/seerr:/app/config
+    ports:
+      - 127.0.0.1:5055:5055
